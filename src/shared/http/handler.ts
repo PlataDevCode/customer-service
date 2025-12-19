@@ -1,0 +1,23 @@
+import type { Request, Response } from 'express';
+import type { HttpRequest } from './request';
+import { mapErrorToHttp } from './errors';
+
+type Handler = (req: HttpRequest) => Promise<unknown>;
+
+export function httpHandler(handler: Handler) {
+  return async (req: Request, res: Response) => {
+    try {
+      const result = await handler({
+        body: req.body,
+        params: req.params,
+        query: req.query as Record<string, string | undefined>,
+        headers: req.headers as Record<string, string | undefined>,
+      });
+
+      res.status(200).json(result);
+    } catch (error) {
+      const { statusCode, body } = mapErrorToHttp(error);
+      res.status(statusCode).json(body);
+    }
+  };
+}
