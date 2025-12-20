@@ -1,8 +1,9 @@
 import type { Config } from 'jest';
 
 const config: Config = {
-  preset: 'ts-jest',
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
+  extensionsToTreatAsEsm: ['.ts'],
 
   testMatch: ['<rootDir>/test/e2e/**/*.e2e.spec.ts'],
 
@@ -10,7 +11,7 @@ const config: Config = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 
-  setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
 
   testTimeout: 30000,
 
