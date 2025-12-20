@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { logger } from './logger';
+import { logger } from './logger.js';
 
 export function overrideConsole() {
   const env = process.env.NODE_ENV ?? 'development';

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
+    "module": "nodenext",
     "lib": ["ES2022"],
 
     "rootDir": "src",
@@ -14,7 +14,8 @@
 
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "nodenext",
+    "isolatedModules": true,
 
     "types": ["node"],
 

@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import type { HttpRequest } from './request';
-import { mapErrorToHttp } from './errors';
+import type { HttpRequest } from './request.js';
+import { mapErrorToHttp } from './errors.js';
 
 type Handler = (req: HttpRequest) => Promise<unknown>;
 

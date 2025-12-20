@@ -1,4 +1,4 @@
-import { AppError } from '../errors/AppError';
+import { AppError } from '../errors/AppError.js';
 
 export function mapErrorToHttp(error: unknown): {
   statusCode: number;

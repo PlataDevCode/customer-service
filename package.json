@@ -6,11 +6,12 @@
   "author": "Alexander L.",
   "license": "ISC",
   "description": "Customer management API built with Node.js, TypeScript and Serverless Framework, following DDD and Hexagonal Architecture.",
+  "type": "module",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "build": "tsc",
     "start": "node dist/main.js",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
     "test:unit": "cross-env NODE_ENV=test jest --config jest.config.ts",
     "test:e2e": "cross-env NODE_ENV=test jest --config jest.e2e.config.ts"
   },

@@ -1,4 +1,4 @@
-import { createApp } from './shared/http/create-app';
+import { createApp } from './shared/http/create-app.js';
 
 const app = createApp();
 app.listen(3000, () => {
