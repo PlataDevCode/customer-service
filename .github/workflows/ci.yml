@@ -32,10 +32,10 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
 
-      - name: Run e2e tests
-        run: npm run test:e2e
-
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run e2e tests
+        run: npm run test:e2e
