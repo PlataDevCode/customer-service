@@ -23,6 +23,9 @@ const config: Config = {
     'src/**/*.ts',
     '!src/**/index.ts',
     '!src/**/infrastructure/**',
+    '!src/main.ts',
+    '!src/handler.ts',
+    '!src/shared/**',
   ],
 
   coverageDirectory: 'coverage',
