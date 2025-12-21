@@ -8,10 +8,12 @@ const config: Config = {
   testMatch: [
     '<rootDir>/test/unit/**/*.spec.ts',
     '<rootDir>/test/unit/**/*.test.ts',
+    '<rootDir>/src/**/__tests__/**/*.spec.ts',
   ],
 
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^(\\.{1,2}/.*)\\.js$': '$1',
   },
 
   setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
