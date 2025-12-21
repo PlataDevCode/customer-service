@@ -1,10 +1,15 @@
-import { AvailableCredit, Money, CustomerId } from '../value-objects/index.js';
+import {
+  AvailableCredit,
+  Money,
+  CustomerId,
+  Email,
+} from '../value-objects/index.js';
 
 export class Customer {
   private constructor(
     private readonly _id: CustomerId,
     private _name: string,
-    private _email: string,
+    private _email: Email,
     private _availableCredit: AvailableCredit,
     private readonly createdAt: Date,
     private updatedAt: Date,
@@ -20,7 +25,7 @@ export class Customer {
   //#endregion
 
   //#region Methods
-  public static create(id: CustomerId, name: string, email: string) {
+  public static create(id: CustomerId, name: string, email: Email) {
     return new Customer(
       id,
       name,
@@ -39,9 +44,17 @@ export class Customer {
     this._availableCredit = this._availableCredit.decrease(amount);
     this.updatedAt = new Date();
   }
-  public updateEmail(email: string) {
-    this._email = email;
+
+  public updateEmail(email: string): void {
+    const newEmail = Email.create(email);
+
+    if (this._email.equals(newEmail)) {
+      return;
+    }
+
+    this._email = newEmail;
     this.updatedAt = new Date();
   }
+
   //#endregion
 }
