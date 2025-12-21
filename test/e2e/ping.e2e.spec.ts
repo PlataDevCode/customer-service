@@ -1,7 +1,7 @@
 import { describe, it, expect } from '@jest/globals';
 import request from 'supertest';
 
-import { createApp } from '../../src/shared/http/create-app';
+import { createApp } from '../../src/shared/http/create-app.js';
 
 describe('GET /ping', () => {
   it('returns status ok', async () => {
