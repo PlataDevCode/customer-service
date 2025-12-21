@@ -1,9 +1,8 @@
-import { AvailableCredit } from '../value-objects/AvailableCredit.js';
-import { Money } from '../value-objects/Money.js';
+import { AvailableCredit, Money, CustomerId } from '../value-objects/index.js';
 
 export class Customer {
   private constructor(
-    private readonly _id: number,
+    private readonly _id: CustomerId,
     private _name: string,
     private _email: string,
     private _availableCredit: AvailableCredit,
@@ -21,7 +20,7 @@ export class Customer {
   //#endregion
 
   //#region Methods
-  public static create(id: number, name: string, email: string) {
+  public static create(id: CustomerId, name: string, email: string) {
     return new Customer(
       id,
       name,
