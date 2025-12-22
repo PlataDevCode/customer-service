@@ -5,6 +5,10 @@ export class Money {
     this.amount = amount;
   }
 
+  public get value() {
+    return this.amount;
+  }
+
   public add(other: Money): Money {
     return new Money(this.amount + other.amount);
   }
