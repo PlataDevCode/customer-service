@@ -16,9 +16,18 @@ export class Customer {
   ) {}
 
   //#region Getters
+  public get id(): CustomerId {
+    return this._id;
+  }
+
+  public get email(): Email {
+    return this._email;
+  }
+
   public get name(): string {
     return this._name;
   }
+
   public get availableCredit(): AvailableCredit {
     return this._availableCredit;
   }

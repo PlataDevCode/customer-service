@@ -11,6 +11,10 @@ export class AvailableCredit {
     return this.balance;
   }
 
+  public toNumber(): number {
+    return this.balance.value;
+  }
+
   public static zero(): AvailableCredit {
     return new AvailableCredit(Money.zero());
   }
