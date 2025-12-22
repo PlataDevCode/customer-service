@@ -1,5 +1,5 @@
 export interface CustomerListItemDto {
-  id: number;
+  id: string;
   name: string;
   email: string;
   availableCredit: number;

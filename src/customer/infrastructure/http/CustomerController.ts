@@ -32,8 +32,11 @@ export class CustomerController {
     });
   };
 
-  listByCredit = async () => {
-    return this.listCustomersByCredit.execute();
+  listByCredit = async ({ query }: any) => {
+    const order =
+      query?.order === 'asc' || query?.order === 'desc' ? query.order : 'desc';
+
+    return this.listCustomersByCredit.execute(order);
   };
 
   addCreditToCustomer = async ({ params, body }: any) => {
