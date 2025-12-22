@@ -8,12 +8,14 @@ import { SubtractCreditFromCustomerUseCase } from '../../application/use-cases/s
 import { UpdateCustomerUseCase } from '../../application/use-cases/update-customer/UpdateCustomerUseCase.js';
 import { DeleteCustomerUseCase } from '../../application/use-cases/delete-customer/DeleteCustomerUseCase.js';
 import { InMemoryCustomerRepository } from '../repositories/InMemoryCustomerRepository.js';
+import { UuidCustomerIdGenerator } from '../id/UuidCustomerIdGenerator.js';
 
 export function buildCustomerRouter() {
   const repository = new InMemoryCustomerRepository();
+  const idGenerator = new UuidCustomerIdGenerator();
 
   const controller = new CustomerController(
-    new CreateCustomerUseCase(repository),
+    new CreateCustomerUseCase(repository, idGenerator),
     new GetCustomerByIdUseCase(repository),
     new ListCustomersSortedByCreditUseCase(repository),
     new AddCreditToCustomerUseCase(repository),
