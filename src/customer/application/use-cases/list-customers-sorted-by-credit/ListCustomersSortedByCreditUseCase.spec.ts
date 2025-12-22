@@ -8,7 +8,7 @@ import {
 } from '../../../domain/value-objects/index.js';
 
 describe('ListCustomersSortedByCreditUseCase', () => {
-  it('returns customers sorted by available credit', async () => {
+  it('returns customers sorted by available credit (delegated to repository)', async () => {
     const repository = createMockCustomerRepository();
 
     const customer1 = Customer.create(
@@ -32,8 +32,14 @@ describe('ListCustomersSortedByCreditUseCase', () => {
 
     const useCase = new ListCustomersSortedByCreditUseCase(repository);
 
-    const result = await useCase.execute();
+    const result = await useCase.execute('desc');
 
+    // ✅ contrato: el use case pasa el order al repo
+    expect(repository.findAllSortedByAvailableCredit).toHaveBeenCalledWith(
+      'desc',
+    );
+
+    // ✅ mapping correcto a DTO
     expect(result).toEqual([
       {
         id: 'customer-1',
@@ -48,5 +54,39 @@ describe('ListCustomersSortedByCreditUseCase', () => {
         availableCredit: 50,
       },
     ]);
+  });
+
+  it('supports asc order', async () => {
+    const repository = createMockCustomerRepository();
+
+    const customer1 = Customer.create(
+      CustomerId.create('customer-1'),
+      'Alex',
+      Email.create('alex@test.com'),
+    );
+    customer1.addCredit(new Money(100));
+
+    const customer2 = Customer.create(
+      CustomerId.create('customer-2'),
+      'Bob',
+      Email.create('bob@test.com'),
+    );
+    customer2.addCredit(new Money(50));
+
+    repository.findAllSortedByAvailableCredit.mockResolvedValue([
+      customer2,
+      customer1,
+    ]);
+
+    const useCase = new ListCustomersSortedByCreditUseCase(repository);
+
+    const result = await useCase.execute('asc');
+
+    expect(repository.findAllSortedByAvailableCredit).toHaveBeenCalledWith(
+      'asc',
+    );
+
+    expect(result[0]!.id).toBe('customer-2');
+    expect(result[1]!.id).toBe('customer-1');
   });
 });
