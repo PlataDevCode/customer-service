@@ -1,15 +1,21 @@
+import { jest } from '@jest/globals';
 import { createMockCustomerRepository } from '../../../../../test/mocks/CustomerRepositoryMock.js';
 import { CreateCustomerUseCase } from './CreateCustomerUseCase.js';
 import { CreateCustomerDto } from './CreateCustomerDto.js';
 import { Customer } from '../../../domain/entities/Customer.js';
+import { CustomerIdGenerator } from '../../ports/CustomerIdGenerator.js';
 
 describe('CreateCustomerUseCase', () => {
   it('creates and saves a customer', async () => {
     const repository = createMockCustomerRepository();
-    const useCase = new CreateCustomerUseCase(repository);
+
+    const idGenerator: CustomerIdGenerator = {
+      generate: jest.fn<() => string>().mockReturnValue('customer-1'),
+    };
+
+    const useCase = new CreateCustomerUseCase(repository, idGenerator);
 
     const dto: CreateCustomerDto = {
-      customerId: 1,
       name: 'Alex',
       email: 'alex@test.com',
     };
@@ -21,15 +27,20 @@ describe('CreateCustomerUseCase', () => {
     const savedCustomer = repository.save.mock.calls[0]![0];
 
     expect(savedCustomer).toBeInstanceOf(Customer);
+    expect(savedCustomer.id.toPrimitive()).toBe('customer-1');
     expect(savedCustomer.availableCredit.value.isZero()).toBe(true);
   });
 
   it('throws when email is invalid', async () => {
     const repository = createMockCustomerRepository();
-    const useCase = new CreateCustomerUseCase(repository);
+
+    const idGenerator: CustomerIdGenerator = {
+      generate: jest.fn<() => string>().mockReturnValue('customer-1'),
+    };
+
+    const useCase = new CreateCustomerUseCase(repository, idGenerator);
 
     const dto: CreateCustomerDto = {
-      customerId: 1,
       name: 'Alex',
       email: 'invalid-email',
     };

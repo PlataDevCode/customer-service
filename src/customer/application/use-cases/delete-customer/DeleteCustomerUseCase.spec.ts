@@ -9,7 +9,7 @@ describe('DeleteCustomerUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -18,10 +18,12 @@ describe('DeleteCustomerUseCase', () => {
 
     const useCase = new DeleteCustomerUseCase(repository);
 
-    await useCase.execute({ customerId: 1 });
+    await useCase.execute({ customerId: 'customer-1' });
 
     expect(repository.deleteById).toHaveBeenCalledTimes(1);
-    expect(repository.deleteById).toHaveBeenCalledWith(CustomerId.create(1));
+    expect(repository.deleteById).toHaveBeenCalledWith(
+      CustomerId.create('customer-1'),
+    );
   });
 
   it('throws when customer does not exist', async () => {
@@ -30,8 +32,8 @@ describe('DeleteCustomerUseCase', () => {
 
     const useCase = new DeleteCustomerUseCase(repository);
 
-    await expect(useCase.execute({ customerId: 1 })).rejects.toBeInstanceOf(
-      DeleteCustomerError,
-    );
+    await expect(
+      useCase.execute({ customerId: 'customer-1' }),
+    ).rejects.toBeInstanceOf(DeleteCustomerError);
   });
 });

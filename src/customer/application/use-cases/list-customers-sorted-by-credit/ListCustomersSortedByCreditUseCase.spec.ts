@@ -12,14 +12,14 @@ describe('ListCustomersSortedByCreditUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer1 = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
     customer1.addCredit(new Money(100));
 
     const customer2 = Customer.create(
-      CustomerId.create(2),
+      CustomerId.create('customer-2'),
       'Bob',
       Email.create('bob@test.com'),
     );
@@ -36,13 +36,13 @@ describe('ListCustomersSortedByCreditUseCase', () => {
 
     expect(result).toEqual([
       {
-        id: 1,
+        id: 'customer-1',
         name: 'Alex',
         email: 'alex@test.com',
         availableCredit: 100,
       },
       {
-        id: 2,
+        id: 'customer-2',
         name: 'Bob',
         email: 'bob@test.com',
         availableCredit: 50,

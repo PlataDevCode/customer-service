@@ -9,7 +9,7 @@ describe('UpdateCustomerUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -19,7 +19,7 @@ describe('UpdateCustomerUseCase', () => {
     const useCase = new UpdateCustomerUseCase(repository);
 
     await useCase.execute({
-      customerId: 1,
+      customerId: 'customer-1',
       name: 'Alexander',
     });
 
@@ -31,7 +31,7 @@ describe('UpdateCustomerUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -41,7 +41,7 @@ describe('UpdateCustomerUseCase', () => {
     const useCase = new UpdateCustomerUseCase(repository);
 
     await useCase.execute({
-      customerId: 1,
+      customerId: 'customer-1',
       email: 'new@test.com',
     });
 
@@ -55,7 +55,7 @@ describe('UpdateCustomerUseCase', () => {
     const useCase = new UpdateCustomerUseCase(repository);
 
     await expect(
-      useCase.execute({ customerId: 1, name: 'X' }),
+      useCase.execute({ customerId: 'customer-1', name: 'X' }),
     ).rejects.toBeInstanceOf(UpdateCustomerError);
   });
 });
