@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import type { HttpRequest } from './request.js';
 import { mapErrorToHttp } from './errors.js';
+import { logger } from '../logger/logger.js';
 
 type Handler = (req: HttpRequest) => Promise<unknown>;
 
@@ -17,6 +18,17 @@ export function httpHandler(handler: Handler) {
       res.status(200).json(result);
     } catch (error) {
       const { statusCode, body } = mapErrorToHttp(error);
+
+      if (statusCode >= 500) {
+        logger.error('HTTP request failed', {
+          error,
+          method: req.method,
+          path: req.path,
+          params: req.params,
+          body: req.body,
+        });
+      }
+
       res.status(statusCode).json(body);
     }
   };
