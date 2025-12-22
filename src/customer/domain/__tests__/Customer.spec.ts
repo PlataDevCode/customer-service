@@ -4,7 +4,7 @@ import { Money, CustomerId, Email } from '../value-objects/index.js';
 describe('Customer Aggregate - credit behavior', () => {
   it('adds credit to customer', () => {
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -16,7 +16,7 @@ describe('Customer Aggregate - credit behavior', () => {
 
   it('accumulates credit when adding multiple times', () => {
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -29,7 +29,7 @@ describe('Customer Aggregate - credit behavior', () => {
 
   it('subtracts credit from customer', () => {
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
