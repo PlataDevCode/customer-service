@@ -65,5 +65,11 @@ export class Customer {
     this.updatedAt = new Date();
   }
 
+  public updateName(name: string): void {
+    if (this._name === name) return;
+    this._name = name;
+    this.updatedAt = new Date();
+  }
+
   //#endregion
 }
