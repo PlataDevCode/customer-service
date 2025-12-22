@@ -8,7 +8,7 @@ const config: Config = {
   testMatch: [
     '<rootDir>/test/unit/**/*.spec.ts',
     '<rootDir>/test/unit/**/*.test.ts',
-    '<rootDir>/src/**/__tests__/**/*.spec.ts',
+    '<rootDir>/src/**/*.spec.ts',
   ],
 
   moduleNameMapper: {
