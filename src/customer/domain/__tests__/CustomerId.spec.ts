@@ -1,3 +1,4 @@
+import { InvalidCustomerIdError } from '../errors/InvalidCusomerIdError.js';
 import { CustomerId } from '../value-objects/CustomerId.js';
 
 describe('CustomerId Value Object', () => {
@@ -6,9 +7,14 @@ describe('CustomerId Value Object', () => {
     expect(id.toPrimitive()).toBe(1);
   });
 
-  it('throws error for invalid id', () => {
-    expect(() => CustomerId.create(0)).toThrow();
-    expect(() => CustomerId.create(-1)).toThrow();
+  it('throws InvalidCustomerIdError for invalid id', () => {
+    expect(() => CustomerId.create(0)).toThrow(InvalidCustomerIdError);
+
+    expect(() => CustomerId.create(-1)).toThrow(InvalidCustomerIdError);
+
+    expect(() => CustomerId.create(NaN)).toThrow(InvalidCustomerIdError);
+
+    expect(() => CustomerId.create(1.5)).toThrow(InvalidCustomerIdError);
   });
 
   it('compares equality by value', () => {
