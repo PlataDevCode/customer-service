@@ -50,5 +50,6 @@ if (isLocal) {
 
 export const logger = winston.createLogger({
   level: process.env.LOG_LEVEL ?? 'info',
+  format: combine(timestamp(), json()),
   transports,
 });
