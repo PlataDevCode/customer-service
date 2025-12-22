@@ -1,3 +1,5 @@
+import { InvalidEmailError } from '../errors/InvalidEmailError.js';
+
 export class Email {
   private readonly value: string;
 
@@ -27,7 +29,7 @@ export class Email {
     const regex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 
     if (!regex.test(this.value)) {
-      throw new Error(`Invalid email format: ${this.value}`);
+      throw new InvalidEmailError(this.value);
     }
   }
 }
