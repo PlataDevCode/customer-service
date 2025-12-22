@@ -1,3 +1,3 @@
 export interface GetCustomerByIdDto {
-  customerId: number;
+  customerId: string;
 }
