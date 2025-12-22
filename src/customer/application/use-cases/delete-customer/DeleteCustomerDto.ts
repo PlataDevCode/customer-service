@@ -1,3 +1,3 @@
 export interface DeleteCustomerDto {
-  customerId: number;
+  customerId: string;
 }

@@ -1,5 +1,5 @@
 export interface UpdateCustomerDto {
-  customerId: number;
+  customerId: string;
   name?: string;
   email?: string;
 }

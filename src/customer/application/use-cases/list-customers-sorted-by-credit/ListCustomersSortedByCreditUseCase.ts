@@ -4,9 +4,9 @@ import { CustomerListItemDto } from './CustomerListItemDto.js';
 export class ListCustomersSortedByCreditUseCase {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  public async execute(): Promise<CustomerListItemDto[]> {
+  public async execute(order: 'asc' | 'desc'): Promise<CustomerListItemDto[]> {
     const customers =
-      await this.customerRepository.findAllSortedByAvailableCredit('desc');
+      await this.customerRepository.findAllSortedByAvailableCredit(order);
 
     return customers.map((customer) => ({
       id: customer.id.toPrimitive(),

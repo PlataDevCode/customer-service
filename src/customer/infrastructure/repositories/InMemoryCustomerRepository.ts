@@ -3,7 +3,7 @@ import { CustomerRepository } from '../../domain/repositories/CustomerRepository
 import { CustomerId } from '../../domain/value-objects/CustomerId.js';
 
 export class InMemoryCustomerRepository implements CustomerRepository {
-  private customers: Map<number, Customer> = new Map();
+  private customers: Map<string, Customer> = new Map();
 
   async save(customer: Customer): Promise<void> {
     this.customers.set(customer.id.toPrimitive(), customer);

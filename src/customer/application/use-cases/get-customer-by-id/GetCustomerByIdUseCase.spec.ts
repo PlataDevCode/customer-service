@@ -9,7 +9,7 @@ describe('GetCustomerByIdUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -18,7 +18,7 @@ describe('GetCustomerByIdUseCase', () => {
 
     const useCase = new GetCustomerByIdUseCase(repository);
 
-    const result = await useCase.execute({ customerId: 1 });
+    const result = await useCase.execute({ customerId: 'customer-1' });
 
     expect(result).toBe(customer);
     expect(repository.findById).toHaveBeenCalledTimes(1);
@@ -30,15 +30,15 @@ describe('GetCustomerByIdUseCase', () => {
 
     const useCase = new GetCustomerByIdUseCase(repository);
 
-    await expect(useCase.execute({ customerId: 1 })).rejects.toBeInstanceOf(
-      GetCustomerByIdError,
-    );
+    await expect(
+      useCase.execute({ customerId: 'customer-1' }),
+    ).rejects.toBeInstanceOf(GetCustomerByIdError);
   });
 
   it('throws when customerId is invalid', async () => {
     const repository = createMockCustomerRepository();
     const useCase = new GetCustomerByIdUseCase(repository);
 
-    await expect(useCase.execute({ customerId: -1 })).rejects.toThrow();
+    await expect(useCase.execute({ customerId: '' })).rejects.toThrow();
   });
 });

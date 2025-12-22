@@ -1,4 +1,4 @@
 export interface AddCreditToCustomerDto {
-  customerId: number;
+  customerId: string;
   amount: number;
 }

@@ -18,48 +18,59 @@ export class CustomerController {
   ) {}
 
   create = async ({ body }: any) => {
-    await this.createCustomer.execute(body);
+    await this.createCustomer.execute({
+      name: body.name,
+      email: body.email,
+    });
+
     return { status: 'ok' };
   };
 
   getById = async ({ params }: any) => {
     return this.getCustomerById.execute({
-      customerId: Number(params.id),
+      customerId: params.id,
     });
   };
 
-  listByCredit = async () => {
-    return this.listCustomersByCredit.execute();
+  listByCredit = async ({ query }: any) => {
+    const order =
+      query?.order === 'asc' || query?.order === 'desc' ? query.order : 'desc';
+
+    return this.listCustomersByCredit.execute(order);
   };
 
   addCreditToCustomer = async ({ params, body }: any) => {
     await this.addCredit.execute({
-      customerId: Number(params.id),
+      customerId: params.id,
       amount: body.amount,
     });
+
     return { status: 'ok' };
   };
 
   subtractCreditFromCustomer = async ({ params, body }: any) => {
     await this.subtractCredit.execute({
-      customerId: Number(params.id),
+      customerId: params.id,
       amount: body.amount,
     });
+
     return { status: 'ok' };
   };
 
   update = async ({ params, body }: any) => {
     await this.updateCustomer.execute({
-      customerId: Number(params.id),
+      customerId: params.id,
       ...body,
     });
+
     return { status: 'ok' };
   };
 
   delete = async ({ params }: any) => {
     await this.deleteCustomer.execute({
-      customerId: Number(params.id),
+      customerId: params.id,
     });
+
     return { status: 'ok' };
   };
 }

@@ -9,7 +9,7 @@ describe('AddCreditToCustomerUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -18,7 +18,7 @@ describe('AddCreditToCustomerUseCase', () => {
 
     const useCase = new AddCreditToCustomerUseCase(repository);
 
-    await useCase.execute({ customerId: 1, amount: 100 });
+    await useCase.execute({ customerId: 'customer-1', amount: 100 });
 
     expect(repository.save).toHaveBeenCalledTimes(1);
     expect(customer.availableCredit.toNumber()).toBe(100);
@@ -31,7 +31,7 @@ describe('AddCreditToCustomerUseCase', () => {
     const useCase = new AddCreditToCustomerUseCase(repository);
 
     await expect(
-      useCase.execute({ customerId: 1, amount: 100 }),
+      useCase.execute({ customerId: 'customer-1', amount: 100 }),
     ).rejects.toBeInstanceOf(AddCreditToCustomerError);
   });
 
@@ -39,7 +39,7 @@ describe('AddCreditToCustomerUseCase', () => {
     const repository = createMockCustomerRepository();
 
     const customer = Customer.create(
-      CustomerId.create(1),
+      CustomerId.create('customer-1'),
       'Alex',
       Email.create('alex@test.com'),
     );
@@ -49,7 +49,7 @@ describe('AddCreditToCustomerUseCase', () => {
     const useCase = new AddCreditToCustomerUseCase(repository);
 
     await expect(
-      useCase.execute({ customerId: 1, amount: -10 }),
+      useCase.execute({ customerId: 'customer-1', amount: -10 }),
     ).rejects.toThrow('Money amount cannot be negative');
   });
 });

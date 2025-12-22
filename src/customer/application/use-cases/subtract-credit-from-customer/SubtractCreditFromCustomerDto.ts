@@ -1,4 +1,4 @@
 export interface SubtractCreditFromCustomerDto {
-  customerId: number;
+  customerId: string;
   amount: number;
 }
