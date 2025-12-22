@@ -5,22 +5,19 @@ import { CustomerController } from './CustomerController.js';
 export function customerRoutes(controller: CustomerController): Router {
   const router = Router();
 
-  router.post('/customers', httpHandler(controller.create));
-  router.get('/customers', httpHandler(controller.listByCredit));
-  router.get('/customers/:id', httpHandler(controller.getById));
+  router.post('/', httpHandler(controller.create));
+  router.get('/', httpHandler(controller.listByCredit));
+  router.get('/:id', httpHandler(controller.getById));
+
+  router.post('/:id/credit/add', httpHandler(controller.addCreditToCustomer));
 
   router.post(
-    '/customers/:id/credit/add',
-    httpHandler(controller.addCreditToCustomer),
-  );
-
-  router.post(
-    '/customers/:id/credit/subtract',
+    '/:id/credit/subtract',
     httpHandler(controller.subtractCreditFromCustomer),
   );
 
-  router.patch('/customers/:id', httpHandler(controller.update));
-  router.delete('/customers/:id', httpHandler(controller.delete));
+  router.patch('/:id', httpHandler(controller.update));
+  router.delete('/:id', httpHandler(controller.delete));
 
   return router;
 }

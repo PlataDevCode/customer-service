@@ -1,6 +1,7 @@
 import express from 'express';
 import { buildCustomerRouter } from '../../customer/infrastructure/http/index.js';
 import { errorMiddleware } from './error-middleware.js';
+import { setupSwagger } from './swagger.js';
 
 export function createApp() {
   const app = express();
@@ -10,7 +11,9 @@ export function createApp() {
     res.status(200).json({ status: 'ok' });
   });
 
-  app.use('/api', buildCustomerRouter());
+  setupSwagger(app);
+
+  app.use('/api/customers', buildCustomerRouter());
   app.use(errorMiddleware);
 
   return app;
