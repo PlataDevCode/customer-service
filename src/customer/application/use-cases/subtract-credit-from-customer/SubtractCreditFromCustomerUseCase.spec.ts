@@ -56,6 +56,6 @@ describe('SubtractCreditFromCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 1, amount: 50 }),
-    ).rejects.toThrow('Insufficient available credit.');
+    ).rejects.toThrow('Insufficient available credit');
   });
 });

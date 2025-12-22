@@ -1,3 +1,4 @@
+import { InvalidEmailError } from '../errors/InvalidEmailError.js';
 import { Email } from '../value-objects/Email.js';
 
 describe('Email Value Object', () => {
@@ -13,7 +14,9 @@ describe('Email Value Object', () => {
     expect(email1.equals(email2)).toBe(true);
   });
 
-  it('throws error for invalid email format', () => {
-    expect(() => Email.create('invalid-email')).toThrow();
+  it('throws InvalidEmailError for invalid email format', () => {
+    expect(() => Email.create('invalid-email')).toThrow(InvalidEmailError);
+    expect(() => Email.create('')).toThrow(InvalidEmailError);
+    expect(() => Email.create('   ')).toThrow(InvalidEmailError);
   });
 });
