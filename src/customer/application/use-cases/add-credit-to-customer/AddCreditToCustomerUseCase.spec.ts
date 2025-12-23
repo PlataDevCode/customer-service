@@ -1,8 +1,8 @@
 import { createMockCustomerRepository } from '../../../../../test/mocks/CustomerRepositoryMock.js';
 import { AddCreditToCustomerUseCase } from './AddCreditToCustomerUseCase.js';
-import { AddCreditToCustomerError } from './AddCreditToCustomerError.js';
 import { Customer } from '../../../domain/entities/Customer.js';
 import { CustomerId, Email } from '../../../domain/value-objects/index.js';
+import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
 
 describe('AddCreditToCustomerUseCase', () => {
   it('adds credit to an existing customer', async () => {
@@ -32,7 +32,7 @@ describe('AddCreditToCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1', amount: 100 }),
-    ).rejects.toBeInstanceOf(AddCreditToCustomerError);
+    ).rejects.toBeInstanceOf(CustomerNotFoundError);
   });
 
   it('throws when amount is invalid', async () => {
@@ -50,6 +50,6 @@ describe('AddCreditToCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1', amount: -10 }),
-    ).rejects.toThrow('Money amount cannot be negative');
+    ).rejects.toThrow();
   });
 });

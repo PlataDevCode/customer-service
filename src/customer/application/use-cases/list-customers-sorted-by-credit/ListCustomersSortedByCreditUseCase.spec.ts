@@ -8,7 +8,7 @@ import {
 } from '../../../domain/value-objects/index.js';
 
 describe('ListCustomersSortedByCreditUseCase', () => {
-  it('returns customers sorted by available credit (delegated to repository)', async () => {
+  it('returns customers sorted by available credit', async () => {
     const repository = createMockCustomerRepository();
 
     const customer1 = Customer.create(
@@ -34,12 +34,10 @@ describe('ListCustomersSortedByCreditUseCase', () => {
 
     const result = await useCase.execute('desc');
 
-    // ✅ contrato: el use case pasa el order al repo
     expect(repository.findAllSortedByAvailableCredit).toHaveBeenCalledWith(
       'desc',
     );
 
-    // ✅ mapping correcto a DTO
     expect(result).toEqual([
       {
         id: 'customer-1',

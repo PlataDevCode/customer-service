@@ -1,12 +1,13 @@
 import { createMockCustomerRepository } from '../../../../../test/mocks/CustomerRepositoryMock.js';
 import { SubtractCreditFromCustomerUseCase } from './SubtractCreditFromCustomerUseCase.js';
-import { SubtractCreditFromCustomerError } from './SubtractCreditFromCustomerError.js';
 import { Customer } from '../../../domain/entities/Customer.js';
 import {
   CustomerId,
   Email,
   Money,
 } from '../../../domain/value-objects/index.js';
+import { InsufficientCreditError } from '../../../domain/errors/InsufficientCreditError.js';
+import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
 
 describe('SubtractCreditFromCustomerUseCase', () => {
   it('subtracts credit from an existing customer', async () => {
@@ -37,7 +38,7 @@ describe('SubtractCreditFromCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1', amount: 10 }),
-    ).rejects.toBeInstanceOf(SubtractCreditFromCustomerError);
+    ).rejects.toBeInstanceOf(CustomerNotFoundError);
   });
 
   it('throws when trying to subtract more credit than available', async () => {
@@ -56,6 +57,6 @@ describe('SubtractCreditFromCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1', amount: 50 }),
-    ).rejects.toThrow('Insufficient available credit');
+    ).rejects.toBeInstanceOf(InsufficientCreditError);
   });
 });
