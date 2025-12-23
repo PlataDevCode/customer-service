@@ -4,6 +4,7 @@ import { CreateCustomerUseCase } from './CreateCustomerUseCase.js';
 import { CreateCustomerDto } from './CreateCustomerDto.js';
 import { Customer } from '../../../domain/entities/Customer.js';
 import { CustomerIdGenerator } from '../../ports/CustomerIdGenerator.js';
+import { Email } from '../../../domain/value-objects/Email.js';
 
 describe('CreateCustomerUseCase', () => {
   it('creates and saves a customer', async () => {
@@ -13,7 +14,17 @@ describe('CreateCustomerUseCase', () => {
       generate: jest.fn<() => string>().mockReturnValue('customer-1'),
     };
 
-    const useCase = new CreateCustomerUseCase(repository, idGenerator);
+    const emailConflictPolicy = {
+      ensureIsUnique: jest
+        .fn<(email: Email) => Promise<void>>()
+        .mockResolvedValue(undefined),
+    };
+
+    const useCase = new CreateCustomerUseCase(
+      repository,
+      idGenerator,
+      emailConflictPolicy,
+    );
 
     const dto: CreateCustomerDto = {
       name: 'Alex',
@@ -22,6 +33,7 @@ describe('CreateCustomerUseCase', () => {
 
     await useCase.execute(dto);
 
+    expect(emailConflictPolicy.ensureIsUnique).toHaveBeenCalledTimes(1);
     expect(repository.save).toHaveBeenCalledTimes(1);
 
     const savedCustomer = repository.save.mock.calls[0]![0];
@@ -38,7 +50,17 @@ describe('CreateCustomerUseCase', () => {
       generate: jest.fn<() => string>().mockReturnValue('customer-1'),
     };
 
-    const useCase = new CreateCustomerUseCase(repository, idGenerator);
+    const emailConflictPolicy = {
+      ensureIsUnique: jest
+        .fn<(email: Email) => Promise<void>>()
+        .mockResolvedValue(undefined),
+    };
+
+    const useCase = new CreateCustomerUseCase(
+      repository,
+      idGenerator,
+      emailConflictPolicy,
+    );
 
     const dto: CreateCustomerDto = {
       name: 'Alex',
@@ -46,5 +68,34 @@ describe('CreateCustomerUseCase', () => {
     };
 
     await expect(useCase.execute(dto)).rejects.toThrow();
+  });
+
+  it('throws when email already exists', async () => {
+    const repository = createMockCustomerRepository();
+
+    const idGenerator: CustomerIdGenerator = {
+      generate: jest.fn<() => string>().mockReturnValue('customer-1'),
+    };
+
+    const emailConflictPolicy = {
+      ensureIsUnique: jest
+        .fn<(email: Email) => Promise<void>>()
+        .mockRejectedValue(new Error('Email already exists')),
+    };
+
+    const useCase = new CreateCustomerUseCase(
+      repository,
+      idGenerator,
+      emailConflictPolicy,
+    );
+
+    const dto: CreateCustomerDto = {
+      name: 'Alex',
+      email: 'alex@test.com',
+    };
+
+    await expect(useCase.execute(dto)).rejects.toThrow(
+      'Email already exists',
+    );
   });
 });

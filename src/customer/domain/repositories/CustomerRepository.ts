@@ -1,5 +1,6 @@
 import { Customer } from '../entities/Customer.js';
 import { CustomerId } from '../value-objects/CustomerId.js';
+import { Email } from '../value-objects/Email.js';
 
 export interface CustomerRepository {
   save(customer: Customer): Promise<void>;
@@ -9,4 +10,6 @@ export interface CustomerRepository {
   deleteById(id: CustomerId): Promise<void>;
 
   findAllSortedByAvailableCredit(order: 'asc' | 'desc'): Promise<Customer[]>;
+
+  findByEmail(email: Email): Promise<Customer | null>;
 }
