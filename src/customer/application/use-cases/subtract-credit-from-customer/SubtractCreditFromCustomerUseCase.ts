@@ -1,3 +1,4 @@
+import { Customer } from '../../../domain/entities/Customer.js';
 import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
 import { CustomerRepository } from '../../../domain/repositories/CustomerRepository.js';
 import { CustomerId, Money } from '../../../domain/value-objects/index.js';
