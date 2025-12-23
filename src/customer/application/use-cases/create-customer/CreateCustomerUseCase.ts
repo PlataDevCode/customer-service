@@ -12,7 +12,7 @@ export class CreateCustomerUseCase {
     private readonly emailConflictPolicy: EmailUniquenessPolicy,
   ) {}
 
-  public async execute(dto: CreateCustomerDto): Promise<void> {
+  public async execute(dto: CreateCustomerDto): Promise<Customer> {
     const email = Email.create(dto.email);
     await this.emailConflictPolicy.ensureIsUnique(email);
 
@@ -23,5 +23,6 @@ export class CreateCustomerUseCase {
     );
 
     await this.customerRepository.save(customer);
+    return customer;
   }
 }
