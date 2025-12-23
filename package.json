@@ -11,9 +11,9 @@
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
     "start": "node dist/main.js",
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:unit": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.ts",
-    "test:e2e": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --config jest.e2e.config.ts"
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test:unit": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --selectProjects unit --coverage",
+    "test:e2e": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --selectProjects e2e"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
