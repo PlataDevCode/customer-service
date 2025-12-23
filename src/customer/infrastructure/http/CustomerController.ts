@@ -19,60 +19,98 @@ export class CustomerController {
   ) {}
 
   create = async ({ body }: any) => {
-    await runUseCase(() =>
+    const customer = await runUseCase(() =>
       this.createCustomer.execute({
         name: body.name,
         email: body.email,
       }),
     );
 
-    return { status: 'ok' };
+    return {
+      id: customer.id.toPrimitive(),
+      name: customer.name,
+      email: customer.email.toString(),
+      availableCredit: customer.availableCredit.toNumber(),
+    };
   };
+
   getById = async ({ params }: any) => {
-    return this.getCustomerById.execute({
-      customerId: params.id,
-    });
+    const customer = await runUseCase(() =>
+      this.getCustomerById.execute({
+        customerId: params.id,
+      }),
+    );
+
+    return {
+      id: customer.id.toPrimitive(),
+      name: customer.name,
+      email: customer.email.toString(),
+      availableCredit: customer.availableCredit.toNumber(),
+    };
   };
 
   listByCredit = async ({ query }: any) => {
     const order =
       query?.order === 'asc' || query?.order === 'desc' ? query.order : 'desc';
 
-    return this.listCustomersByCredit.execute(order);
+    return runUseCase(() => this.listCustomersByCredit.execute(order));
   };
 
   addCreditToCustomer = async ({ params, body }: any) => {
-    await this.addCredit.execute({
-      customerId: params.id,
-      amount: body.amount,
-    });
+    const customer = await runUseCase(() =>
+      this.addCredit.execute({
+        customerId: params.id,
+        amount: body.amount,
+      }),
+    );
 
-    return { status: 'ok' };
+    return {
+      id: customer.id.toPrimitive(),
+      name: customer.name,
+      email: customer.email.toString(),
+      availableCredit: customer.availableCredit.toNumber(),
+    };
   };
 
   subtractCreditFromCustomer = async ({ params, body }: any) => {
-    await this.subtractCredit.execute({
-      customerId: params.id,
-      amount: body.amount,
-    });
+    const customer = await runUseCase(() =>
+      this.subtractCredit.execute({
+        customerId: params.id,
+        amount: body.amount,
+      }),
+    );
 
-    return { status: 'ok' };
+    return {
+      id: customer.id.toPrimitive(),
+      name: customer.name,
+      email: customer.email.toString(),
+      availableCredit: customer.availableCredit.toNumber(),
+    };
   };
 
   update = async ({ params, body }: any) => {
-    await this.updateCustomer.execute({
-      customerId: params.id,
-      ...body,
-    });
+    const customer = await runUseCase(() =>
+      this.updateCustomer.execute({
+        customerId: params.id,
+        ...body,
+      }),
+    );
 
-    return { status: 'ok' };
+    return {
+      id: customer.id.toPrimitive(),
+      name: customer.name,
+      email: customer.email.toString(),
+      availableCredit: customer.availableCredit.toNumber(),
+    };
   };
 
   delete = async ({ params }: any) => {
-    await this.deleteCustomer.execute({
-      customerId: params.id,
-    });
+    await runUseCase(() =>
+      this.deleteCustomer.execute({
+        customerId: params.id,
+      }),
+    );
 
-    return { status: 'ok' };
+    return {};
   };
 }
