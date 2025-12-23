@@ -6,6 +6,8 @@ export function translateDomainError(error: DomainError): HttpError {
     case 'InvalidEmailError':
     case 'InvalidCustomerIdError':
       return new HttpError(400, 'VALIDATION_ERROR', error.message);
+    case 'CustomerNotFoundError':
+      return new HttpError(404, 'NOT_FOUND', error.message);
 
     case 'InsufficientCreditError':
     case 'EmailAlreadyExistsError':
