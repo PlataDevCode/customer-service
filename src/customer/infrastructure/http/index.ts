@@ -9,13 +9,15 @@ import { UpdateCustomerUseCase } from '../../application/use-cases/update-custom
 import { DeleteCustomerUseCase } from '../../application/use-cases/delete-customer/DeleteCustomerUseCase.js';
 import { InMemoryCustomerRepository } from '../repositories/InMemoryCustomerRepository.js';
 import { UuidCustomerIdGenerator } from '../id/UuidCustomerIdGenerator.js';
+import { EmailConflictPolicy } from '../../application/policies/EmailConflictPolicy.js';
 
 export function buildCustomerRouter() {
   const repository = new InMemoryCustomerRepository();
   const idGenerator = new UuidCustomerIdGenerator();
+  const emailConflictPolicy = new EmailConflictPolicy(repository);
 
   const controller = new CustomerController(
-    new CreateCustomerUseCase(repository, idGenerator),
+    new CreateCustomerUseCase(repository, idGenerator, emailConflictPolicy),
     new GetCustomerByIdUseCase(repository),
     new ListCustomersSortedByCreditUseCase(repository),
     new AddCreditToCustomerUseCase(repository),

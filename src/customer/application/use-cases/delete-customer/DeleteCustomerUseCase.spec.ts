@@ -1,8 +1,8 @@
 import { createMockCustomerRepository } from '../../../../../test/mocks/CustomerRepositoryMock.js';
 import { DeleteCustomerUseCase } from './DeleteCustomerUseCase.js';
-import { DeleteCustomerError } from './DeleteCustomerError.js';
 import { Customer } from '../../../domain/entities/Customer.js';
 import { CustomerId, Email } from '../../../domain/value-objects/index.js';
+import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
 
 describe('DeleteCustomerUseCase', () => {
   it('deletes an existing customer', async () => {
@@ -34,6 +34,6 @@ describe('DeleteCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1' }),
-    ).rejects.toBeInstanceOf(DeleteCustomerError);
+    ).rejects.toBeInstanceOf(CustomerNotFoundError);
   });
 });

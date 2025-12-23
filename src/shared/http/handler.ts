@@ -20,8 +20,6 @@ export function httpHandler(handler: Handler) {
       const { statusCode, body } = mapErrorToHttp(error);
 
       if (statusCode >= 500) {
-        console.log(error);
-        console.log(error instanceof Error, error?.constructor?.name);
         logger.error('HTTP request failed', {
           error,
           method: req.method,

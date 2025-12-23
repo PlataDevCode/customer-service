@@ -1,8 +1,8 @@
 import { createMockCustomerRepository } from '../../../../../test/mocks/CustomerRepositoryMock.js';
 import { UpdateCustomerUseCase } from './UpdateCustomerUseCase.js';
-import { UpdateCustomerError } from './UpdateCustomerError.js';
 import { Customer } from '../../../domain/entities/Customer.js';
 import { CustomerId, Email } from '../../../domain/value-objects/index.js';
+import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
 
 describe('UpdateCustomerUseCase', () => {
   it('updates customer name', async () => {
@@ -56,6 +56,6 @@ describe('UpdateCustomerUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1', name: 'X' }),
-    ).rejects.toBeInstanceOf(UpdateCustomerError);
+    ).rejects.toBeInstanceOf(CustomerNotFoundError);
   });
 });

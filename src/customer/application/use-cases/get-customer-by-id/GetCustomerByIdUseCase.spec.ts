@@ -1,8 +1,9 @@
 import { createMockCustomerRepository } from '../../../../../test/mocks/CustomerRepositoryMock.js';
 import { GetCustomerByIdUseCase } from './GetCustomerByIdUseCase.js';
-import { GetCustomerByIdError } from './GetCustomerByIdError.js';
 import { Customer } from '../../../domain/entities/Customer.js';
 import { CustomerId, Email } from '../../../domain/value-objects/index.js';
+import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
+import { InvalidCustomerIdError } from '../../../domain/errors/InvalidCusomerIdError.js';
 
 describe('GetCustomerByIdUseCase', () => {
   it('returns a customer when found', async () => {
@@ -24,7 +25,7 @@ describe('GetCustomerByIdUseCase', () => {
     expect(repository.findById).toHaveBeenCalledTimes(1);
   });
 
-  it('throws GetCustomerByIdError when customer does not exist', async () => {
+  it('throws when customer does not exist', async () => {
     const repository = createMockCustomerRepository();
     repository.findById.mockResolvedValue(null);
 
@@ -32,13 +33,15 @@ describe('GetCustomerByIdUseCase', () => {
 
     await expect(
       useCase.execute({ customerId: 'customer-1' }),
-    ).rejects.toBeInstanceOf(GetCustomerByIdError);
+    ).rejects.toBeInstanceOf(CustomerNotFoundError);
   });
 
   it('throws when customerId is invalid', async () => {
     const repository = createMockCustomerRepository();
     const useCase = new GetCustomerByIdUseCase(repository);
 
-    await expect(useCase.execute({ customerId: '' })).rejects.toThrow();
+    await expect(useCase.execute({ customerId: '' })).rejects.toBeInstanceOf(
+      InvalidCustomerIdError,
+    );
   });
 });

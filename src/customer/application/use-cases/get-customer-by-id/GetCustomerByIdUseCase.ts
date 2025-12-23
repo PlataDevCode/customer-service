@@ -1,8 +1,8 @@
 import { CustomerRepository } from '../../../domain/repositories/CustomerRepository.js';
 import { CustomerId } from '../../../domain/value-objects/index.js';
 import { GetCustomerByIdDto } from './GetCustomerByIdDto.js';
-import { GetCustomerByIdError } from './GetCustomerByIdError.js';
 import { Customer } from '../../../domain/entities/Customer.js';
+import { CustomerNotFoundError } from '../../../domain/errors/CustomerNotFound.js';
 
 export class GetCustomerByIdUseCase {
   constructor(private readonly customerRepository: CustomerRepository) {}
@@ -13,7 +13,7 @@ export class GetCustomerByIdUseCase {
     const customer = await this.customerRepository.findById(customerId);
 
     if (!customer) {
-      throw new GetCustomerByIdError('Customer not found');
+      throw new CustomerNotFoundError(customerId.toPrimitive());
     }
 
     return customer;

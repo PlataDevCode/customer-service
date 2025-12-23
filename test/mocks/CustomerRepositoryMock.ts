@@ -8,5 +8,6 @@ export function createMockCustomerRepository(): jest.Mocked<CustomerRepository> 
     findById: jest.fn(),
     deleteById: jest.fn(),
     findAllSortedByAvailableCredit: jest.fn(),
+    findByEmail: jest.fn(),
   };
 }

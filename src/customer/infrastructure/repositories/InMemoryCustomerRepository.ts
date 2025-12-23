@@ -1,6 +1,7 @@
 import { Customer } from '../../domain/entities/Customer.js';
 import { CustomerRepository } from '../../domain/repositories/CustomerRepository.js';
 import { CustomerId } from '../../domain/value-objects/CustomerId.js';
+import { Email } from '../../domain/value-objects/Email.js';
 
 export class InMemoryCustomerRepository implements CustomerRepository {
   private customers: Map<string, Customer> = new Map();
@@ -30,5 +31,14 @@ export class InMemoryCustomerRepository implements CustomerRepository {
     });
 
     return customers;
+  }
+
+  async findByEmail(email: Email): Promise<Customer | null> {
+    for (const customer of this.customers.values()) {
+      if (customer.email.equals(email)) {
+        return customer;
+      }
+    }
+    return null;
   }
 }
