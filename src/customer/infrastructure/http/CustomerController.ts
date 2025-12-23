@@ -1,3 +1,4 @@
+import { runUseCase } from '../../../shared/applcation/run-use-case.js';
 import { AddCreditToCustomerUseCase } from '../../application/use-cases/add-credit-to-customer/AddCreditToCustomerUseCase.js';
 import { CreateCustomerUseCase } from '../../application/use-cases/create-customer/CreateCustomerUseCase.js';
 import { DeleteCustomerUseCase } from '../../application/use-cases/delete-customer/DeleteCustomerUseCase.js';
@@ -18,14 +19,15 @@ export class CustomerController {
   ) {}
 
   create = async ({ body }: any) => {
-    await this.createCustomer.execute({
-      name: body.name,
-      email: body.email,
-    });
+    await runUseCase(() =>
+      this.createCustomer.execute({
+        name: body.name,
+        email: body.email,
+      }),
+    );
 
     return { status: 'ok' };
   };
-
   getById = async ({ params }: any) => {
     return this.getCustomerById.execute({
       customerId: params.id,
