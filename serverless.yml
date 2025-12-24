@@ -7,8 +7,25 @@ provider:
   runtime: nodejs20.x
   region: us-east-1
   stage: dev
+
   environment:
     NODE_ENV: production
+    CUSTOMER_REPOSITORY: dynamodb
+    CUSTOMERS_TABLE_NAME: customers-${self:provider.stage}
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:DeleteItem
+            - dynamodb:Scan
+            - dynamodb:Query
+          Resource:
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/customers-${self:provider.stage}
+            - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/customers-${self:provider.stage}/index/email-index
 
 functions:
   api:
@@ -23,3 +40,29 @@ package:
     - '!src/**'
     - 'dist/**'
     - 'node_modules/**'
+
+resources:
+  Resources:
+    CustomersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: customers-${self:provider.stage}
+        BillingMode: PAY_PER_REQUEST
+
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+        GlobalSecondaryIndexes:
+          - IndexName: email-index
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL

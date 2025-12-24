@@ -40,4 +40,8 @@ export class Money {
   public static zero(): Money {
     return new Money(0);
   }
+
+  public static from(amount: number): Money {
+    return new Money(amount);
+  }
 }
