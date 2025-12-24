@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "1fd2e733-e80f-44ac-bcb9-f0ade2921f06",
+		"name": "customer-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24468472"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Alex\",\r\n  \"email\": \"alex2@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers?order=desc",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "desc",
+							"description": "asc | desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers/:id",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "82879b23-4939-47e3-b209-bb49ea40eca4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "By id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Alexander Plata\",\r\n  \"email\": \"demo@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers/:id",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "82879b23-4939-47e3-b209-bb49ea40eca4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "By Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers/:id",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "82879b23-4939-47e3-b209-bb49ea40eca4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add credit",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers/:id/credit/add",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						":id",
+						"credit",
+						"add"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "82879b23-4939-47e3-b209-bb49ea40eca4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subtract credit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}/api/customers/:id/credit/add",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						":id",
+						"credit",
+						"add"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "82879b23-4939-47e3-b209-bb49ea40eca4"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
