@@ -23,7 +23,7 @@ type CustomerPrimitives = {
 };
 
 export class DynamoDbCustomerRepository implements CustomerRepository {
-  private readonly tableName = process.env.CUSTOMERS_TABLE!;
+  private readonly tableName = process.env.CUSTOMERS_TABLE_NAME!;
 
   async save(customer: Customer): Promise<void> {
     await dynamo.send(
