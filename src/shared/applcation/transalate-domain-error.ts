@@ -3,6 +3,7 @@ import { HttpError } from '../errors/HttpError.js';
 
 export function translateDomainError(error: DomainError): HttpError {
   switch (error.constructor.name) {
+    case 'InvalidMoneyAmountError':
     case 'InvalidEmailError':
     case 'InvalidCustomerIdError':
       return new HttpError(400, 'VALIDATION_ERROR', error.message);
