@@ -115,7 +115,7 @@ Steps:
 
 ### Public Postman workspace
 
-https://soma77-5509.postman.co/workspace/My-Workspace~9945fd80-f121-489b-8eec-337dd2679a0d/collection/24468472-1fd2e733-e80f-44ac-bcb9-f0ade2921f06
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://soma77-5509.postman.co/workspace/My-Workspace~9945fd80-f121-489b-8ecc-337dd2679a0d/collection/24468472-1fd2e733-e80f-44ac-bcb9-f0ade2921f06)
 
 ---
 
