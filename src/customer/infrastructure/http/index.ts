@@ -10,9 +10,20 @@ import { DeleteCustomerUseCase } from '../../application/use-cases/delete-custom
 import { InMemoryCustomerRepository } from '../repositories/InMemoryCustomerRepository.js';
 import { UuidCustomerIdGenerator } from '../id/UuidCustomerIdGenerator.js';
 import { EmailConflictPolicy } from '../../application/policies/EmailConflictPolicy.js';
+import { DynamoDbCustomerRepository } from '../repositories/DynamoDbCustomerRepository.js';
+
+function buildCustomerRepository() {
+  const repositoryType = process.env.CUSTOMER_REPOSITORY ?? 'memory';
+
+  if (repositoryType === 'dynamodb') {
+    return new DynamoDbCustomerRepository();
+  }
+
+  return new InMemoryCustomerRepository();
+}
 
 export function buildCustomerRouter() {
-  const repository = new InMemoryCustomerRepository();
+  const repository = buildCustomerRepository();
   const idGenerator = new UuidCustomerIdGenerator();
   const emailConflictPolicy = new EmailConflictPolicy(repository);
 
