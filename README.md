@@ -215,9 +215,11 @@ The application supports multiple persistence strategies.
 
 ---
 
-## DynamoDB Seed
+DynamoDB Seed
 
-A **manual seed script** is included to verify real persistence.
+A manual seed script is included to populate the DynamoDB table for validation purposes.
+
+The seed script runs locally and writes directly to AWS DynamoDB using configured AWS credentials.
 
 ```bash
 npm run seed:dynamodb
