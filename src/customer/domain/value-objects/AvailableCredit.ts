@@ -31,4 +31,8 @@ export class AvailableCredit {
     if (amount.isGreaterThan(this.balance)) throw new InsufficientCreditError();
     return new AvailableCredit(this.balance.subtract(amount));
   }
+
+  public static from(amount: number): AvailableCredit {
+    return new AvailableCredit(Money.from(amount));
+  }
 }

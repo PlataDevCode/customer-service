@@ -71,5 +71,41 @@ export class Customer {
     this.updatedAt = new Date();
   }
 
+  public static fromPrimitives(props: {
+    id: string;
+    name: string;
+    email: string;
+    availableCredit: number;
+    createdAt: string | Date;
+    updatedAt: string | Date;
+  }): Customer {
+    return new Customer(
+      CustomerId.create(props.id),
+      props.name,
+      Email.create(props.email),
+      AvailableCredit.from(props.availableCredit),
+      new Date(props.createdAt),
+      new Date(props.updatedAt),
+    );
+  }
+
+  public toPrimitives(): {
+    id: string;
+    name: string;
+    email: string;
+    availableCredit: number;
+    createdAt: string;
+    updatedAt: string;
+  } {
+    return {
+      id: this._id.toPrimitive(),
+      name: this._name,
+      email: this._email.toString(),
+      availableCredit: this._availableCredit.toNumber(),
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
+    };
+  }
+
   //#endregion
 }
