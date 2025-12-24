@@ -19,4 +19,12 @@ describe('Money Value Object', () => {
     const result = new Money(100).subtract(new Money(40));
     expect(result.equals(new Money(60))).toBe(true);
   });
+
+  it('throws error when amount is not a number', () => {
+    expect(() => new Money('hola' as any)).toThrow();
+  });
+
+  it('throws error when amount is NaN', () => {
+    expect(() => new Money(Number.NaN)).toThrow();
+  });
 });

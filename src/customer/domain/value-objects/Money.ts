@@ -1,11 +1,19 @@
+import { InvalidMoneyAmountError } from '../errors/InvalidMoneyAmountError.js';
+
 export class Money {
   private readonly amount: number;
   constructor(amount: number) {
-    if (amount < 0) throw new Error('Money amount cannot be negative');
+    if (typeof amount !== 'number' || Number.isNaN(amount)) {
+      throw new InvalidMoneyAmountError(amount);
+    }
+
+    if (amount < 0) {
+      throw new InvalidMoneyAmountError(amount);
+    }
     this.amount = amount;
   }
 
-  public get value() {
+  public get value(): number {
     return this.amount;
   }
 
