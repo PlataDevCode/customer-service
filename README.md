@@ -104,18 +104,21 @@ The project follows a **Hexagonal Architecture** with strict boundaries.
 The repository includes a `postman/` directory containing:
 
 - `customer-service.postman_collection.json`
-- `customer-service.postman_environment.json`
+- `Lambda.postman_environment.json`
 
 Steps:
 
 1. Open Postman
 2. Click **Import**
 3. Select both JSON files from the `postman/` directory
-4. Activate the imported environment
+4. From the environment selector (top right), choose **Lambda Environment**
 
 ### Public Postman workspace
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://soma77-5509.postman.co/workspace/My-Workspace~9945fd80-f121-489b-8ecc-337dd2679a0d/collection/24468472-1fd2e733-e80f-44ac-bcb9-f0ade2921f06)
+Open the public Postman workspace and select the **Lambda Environment** before running requests.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/platadevcode-6463622/2025-challenge/collection/51025802-df2d0af3-7768-47b0-be3c-b01c17e78c8a?action=share&creator=51025802)
+
 
 ---
 
